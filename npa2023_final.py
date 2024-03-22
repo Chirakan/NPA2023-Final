@@ -71,41 +71,43 @@ while True:
     if message.find("/") == 0:
 
         # extract the command
+        stid = message[message.find("/")+1:message.find(" ")]
         command = message[message.find(" ") + 1:]
-        print(command)
+        responseMessage = ""
+        print(stid, command)
 
 # 5. Complete the logic for each command
-
-        if command == "create":
-            responseMessage = create()    
-        elif command == "delete":
-            responseMessage = delete()  
-        elif command == "enable":
-            responseMessage = enable() 
-        elif command == "disable":
-            responseMessage = disable() 
-        elif command == "status":
-            responseMessage = status() 
-        else:
-            responseMessage = "Error: No command or unknown command"
+        if stid == "64070130":
+            if command == "create" and stid == "64070130":
+                responseMessage = create()    
+            elif command == "delete":
+                responseMessage = delete()  
+            elif command == "enable":
+                responseMessage = enable() 
+            elif command == "disable":
+                responseMessage = disable() 
+            elif command == "status":
+                responseMessage = status() 
+            else:
+                responseMessage = "Error: No command or unknown command"
         
 # 6. Complete the code to post the message to the Webex Teams room.
-        
-        # the Webex Teams HTTP headers, including the Authoriztion and Content-Type
-        postHTTPHeaders = HTTPHeaders = {"Authorization": accessToken, "Content-Type": "application/json"}
+        if responseMessage != "":
+            # the Webex Teams HTTP headers, including the Authoriztion and Content-Type
+            postHTTPHeaders = HTTPHeaders = {"Authorization": accessToken, "Content-Type": "application/json"}
 
-        # The Webex Teams POST JSON data
-        # - "roomId" is is ID of the selected room
-        # - "text": is the responseMessage assembled above
-        postData = {"roomId": roomIdToGetMessages, "text": responseMessage}
+            # The Webex Teams POST JSON data
+            # - "roomId" is is ID of the selected room
+            # - "text": is the responseMessage assembled above
+            postData = {"roomId": roomIdToGetMessages, "text": responseMessage}
 
-        # Post the call to the Webex Teams message API.
-        r = requests.post(
-            "https://webexapis.com/v1/messages",
-            data=json.dumps(postData),
-            headers=postHTTPHeaders,
-        )
-        if not r.status_code == 200:
-            raise Exception(
-                "Incorrect reply from Webex Teams API. Status code: {}".format(r.status_code)
+            # Post the call to the Webex Teams message API.
+            r = requests.post(
+                "https://webexapis.com/v1/messages",
+                data=json.dumps(postData),
+                headers=postHTTPHeaders,
             )
+            if not r.status_code == 200:
+                raise Exception(
+                    "Incorrect reply from Webex Teams API. Status code: {}".format(r.status_code)
+                )
