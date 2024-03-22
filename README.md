@@ -1,5 +1,7 @@
 # NPA2023-Final
-
+- Name/Surname: Chirakan Jaisiri
+- Student ID: 64070130
+- GitHub repository URL: https://github.com/Chirakan/NPA2023-Final
 ## Instruction
 
 1. Fork repository นี้ไปยัง GitHub repository ของตนเอง
